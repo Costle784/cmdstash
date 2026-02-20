@@ -2,6 +2,10 @@
 
 ### Step 2 — Developer ergonomics and memory docs pattern
 
+### Micro-step (current)
+- Expand `docs/reference/build-packaging.md` with an explicit explanation of `[build-system]` in `pyproject.toml`, including how it affects `uv build` and PyPI artifacts.
+- Keep this step docs-only (no behavior changes).
+
 ### Why this step now
 - Tightens day-to-day workflow with a canonical `Makefile` command surface.
 - Captures useful pytest reminders in a durable, organized docs location.
