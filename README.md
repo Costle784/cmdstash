@@ -1,6 +1,6 @@
 # cmdstash - Stop re-Googling the same commands
 
-`cmdstash` is a local CLI for saving useful terminal commands with helpful metadata,
+`cmdstash` is a CLI for saving useful terminal commands with helpful metadata,
 then finding them quickly later.
 
 This repository is being built incrementally as a learning-first project.
@@ -48,8 +48,6 @@ Common targets:
 - `make lint` - run Ruff checks
 - `make format` - run Ruff formatter
 - `make check` - format + lint + full tests
-
-Direct `uv` equivalents still work, but prefer `make` commands for consistency.
 
 ## Planned command surface (v1)
 
