@@ -16,6 +16,7 @@ Current references:
 - `build-packaging.md`
 - `ai-integration.md`
 - `sqlite.md`
+- `python-imports.md`
 
 Guidelines:
 - Keep entries brief and task-focused.

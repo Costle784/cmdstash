@@ -2,6 +2,8 @@
 
 This repository is a **learning project**. Optimize for **clarity, small steps, and explanation** over speed.
 Every change should be easy to review and understand.
+Favor readability and human comprehension above all else: choose clear names,
+straightforward code, and enough context/documentation to make intent obvious.
 
 This project is intended to be **published to PyPI**, so structure the repo accordingly (src-layout, packaging metadata, console entrypoint, versioning, etc.).
 
@@ -150,6 +152,9 @@ After each step, ensure:
 - Keep business logic separate from CLI wiring.
 - Avoid hidden side effects; use explicit inputs (e.g., pass db path/config).
 - Add minimal tests early (smoke tests are fine at first), expand gradually.
+- Keep code DRY when it meaningfully improves clarity.
+- Do not over-abstract for small tests or simple flows; explicit local helpers are often clearer.
+- Prefer well-named functions/fixtures and light documentation over clever indirection.
 
 ---
 
