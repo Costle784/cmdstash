@@ -7,14 +7,15 @@ This repository is being built incrementally as a learning-first project.
 
 ## Current status
 
-Step 1 (project foundation) is complete:
+Steps 1-2 are complete:
 
 - Python 3.14 project setup
 - `src/` package layout
 - packaging metadata in `pyproject.toml`
 - console entrypoint wired (`cmdstash`)
+- CLI skeleton for `add`, `find`, and `tags` (placeholder output)
 
-Planned next: real `add`, `find`, and `tags` command behavior.
+Planned next: default storage path configuration (step 3), then SQLite schema + initialization.
 
 ## Requirements
 

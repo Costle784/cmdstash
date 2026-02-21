@@ -139,3 +139,15 @@ Tool commands differ, but the core model is the same:
 - In code/tests, import `cmdstash`, never `src.cmdstash`.
 - Prefer repo commands (`uv run ...`) so env/path behavior is consistent.
 - If imports fail, verify interpreter first, then `sys.path`, then package install state.
+
+## Import path vs executable command (important distinction)
+
+These are related but different:
+
+- Import path: `import cmdstash` works because Python can find package code on `sys.path`.
+- Executable command: `cmdstash ...` works because `[project.scripts]` maps command name to a callable.
+
+For this repo, both must be correct:
+
+- `src/cmdstash/...` + install state make imports work.
+- `[project.scripts] cmdstash = "cmdstash.cli:main"` makes the `cmdstash` shell command available in the environment.

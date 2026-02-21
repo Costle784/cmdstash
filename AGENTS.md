@@ -67,13 +67,12 @@ Use these exact tools unless the repo explicitly changes direction:
 - Lint: `uv run ruff check .`
 - Format: `uv run ruff format .`
 - Tests: `uv run pytest -q`
-- Coverage: `uv run pytest --cov=cmdstash --cov-report=term-missing`
+- Coverage (optional): `uv run pytest --cov=cmdstash --cov-report=term-missing`
 
-### Makefile shortcuts (preferred for daily flow)
+### Makefile shortcuts
 - List targets: `make help`
-- Test (default marker filter): `make test`
-- Coverage run: `make test-cov`
-- Lint + format + tests: `make check`
+- Test: `make test`
+- Check all: `make check`
 
 ---
 
@@ -96,6 +95,7 @@ Prefer packaging choices compatible with standard tooling (PEP 621 metadata in `
 
 ### Code layout
 Prefer a simple, testable structure:
+- Code readability over clever design
 - `src/cmdstash/` for library/app code
 - a small CLI entry module (e.g., `src/cmdstash/cli.py`)
 - keep DB access isolated (e.g., `src/cmdstash/storage/`)
@@ -146,7 +146,7 @@ Then implement only the scoped step.
 After each step, ensure:
 - `uv run ruff check .` passes
 - `uv run ruff format .` applied
-- `uv run pytest -q` passes (even if tests are minimal early on)
+- `uv run pytest -q` passes
 
 ### 5) Prefer simple, testable design
 - Keep business logic separate from CLI wiring.
@@ -155,6 +155,8 @@ After each step, ensure:
 - Keep code DRY when it meaningfully improves clarity.
 - Do not over-abstract for small tests or simple flows; explicit local helpers are often clearer.
 - Prefer well-named functions/fixtures and light documentation over clever indirection.
+- Maintain a balanced test mix across unit, integration, e2e, and smoke over time.
+- Use appropriate pytest markers where they improve test selection and clarity.
 
 ---
 

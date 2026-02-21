@@ -7,6 +7,7 @@ This is the step-by-step implementation roadmap for building `cmdstash` as a lea
 For each step below:
 - Keep diffs small and focused on one concept.
 - Explain **what**, **why**, and **how to verify** in the PR/commit notes.
+- Do not execute a step unless the user explicitly asks to start that specific step.
 - Run:
   - `uv run ruff format .`
   - `uv run ruff check .`
@@ -42,6 +43,8 @@ For each step below:
 
 ## Step 2 — CLI skeleton with command groups (no persistence yet)
 
+**Status:** Completed
+
 **Goal:** Wire the command surface for v1 (`add`, `find`, `tags`) with polished Rich output stubs.
 
 **Scope:**
@@ -63,6 +66,8 @@ For each step below:
 ---
 
 ## Step 3 — Configuration and default storage location
+
+**Status:** Not started (awaiting explicit user go-ahead)
 
 **Goal:** Decide and implement default DB file path using `platformdirs`.
 

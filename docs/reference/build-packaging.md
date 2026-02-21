@@ -38,6 +38,27 @@ In practice for this repo:
 - Your test/lint tooling configuration.
 - Versioning strategy itself (though backend-specific config can read where version lives).
 
+## `pyproject.toml` -> `[project.scripts]` (why local command runs work)
+
+`[project.scripts]` defines console entrypoints. This is what makes `uv run cmdstash ...` work in local development.
+
+For this repo:
+
+```toml
+[project.scripts]
+cmdstash = "cmdstash.cli:main"
+```
+
+Meaning:
+- command name: `cmdstash`
+- target callable: `cmdstash.cli:main`
+
+Practical effect:
+- when the project is installed into the venv, tooling generates a small launcher script named `cmdstash`
+- running `uv run cmdstash --help` executes that launcher, which imports and calls `cmdstash.cli.main`
+
+Without `[project.scripts]`, `uv run cmdstash ...` would not work by command name; you would need module-style execution like `uv run python -m cmdstash`.
+
 ## Core Commands
 
 - Build artifacts: `uv build`
