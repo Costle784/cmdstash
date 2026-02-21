@@ -2,6 +2,42 @@
 
 Working notes for Python packaging and release flow.
 
+## `pyproject.toml` → `[build-system]` (what it is)
+
+The `[build-system]` table tells packaging tools **how to build this project into distribution artifacts**
+(a source distribution and a wheel). It is defined by PEP 517/518 and is primarily consumed by tools like `pip`, `build`, and `uv build`.
+
+Current config:
+
+```toml
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+```
+
+Meaning:
+- `requires`: build-time dependencies that must be installed in an isolated environment before building.
+- `build-backend`: the Python object implementing the build hooks (here, Hatchling).
+
+In practice for this repo:
+- `uv build` reads `[build-system]`.
+- `uv` creates an isolated build environment.
+- It installs `hatchling>=1.27.0` there.
+- It asks `hatchling.build` to produce `dist/*.tar.gz` (sdist) and `dist/*.whl` (wheel).
+
+## How this relates to PyPI
+
+- PyPI hosts the built artifacts; it does **not** build your project for you.
+- The backend selected in `[build-system]` controls what gets packaged.
+- Uploading to PyPI means uploading files from `dist/` that came from that backend.
+- Installers (`pip install cmdstash`) then install from those artifacts.
+
+## What `[build-system]` does *not* control
+
+- Project runtime metadata like name/dependencies/entrypoints (that is `[project]`).
+- Your test/lint tooling configuration.
+- Versioning strategy itself (though backend-specific config can read where version lives).
+
 ## Core Commands
 
 - Build artifacts: `uv build`
@@ -12,6 +48,7 @@ Working notes for Python packaging and release flow.
 - Keep metadata in `pyproject.toml` (PEP 621).
 - Ensure console entrypoint for `cmdstash` remains correct.
 - Keep dependencies minimal and explicit.
+- If build fails, confirm `[build-system]` backend and version constraints are valid.
 
 ## To Capture As Decisions
 

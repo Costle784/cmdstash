@@ -4,16 +4,10 @@ help: ## Show available make targets
 	@awk 'BEGIN {FS = ":.*##"; printf "\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*##/ {printf "  %-12s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 test: ## Run fast tests (skip slow + integration)
-	uv run pytest -q -m "not integration and not slow"
+	uv run pytest -m "not integration and not slow"
 
 test-all: ## Run all tests, including slow/integration
 	uv run pytest -q
-
-test-cov: ## Run tests with coverage summary
-	uv run pytest -q --cov=cmdstash --cov-report=term-missing
-
-cov-html: ## Generate HTML coverage report
-	uv run pytest -q --cov=cmdstash --cov-report=html
 
 lint: ## Run Ruff lint checks
 	uv run ruff check .

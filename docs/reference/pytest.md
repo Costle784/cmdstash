@@ -1,15 +1,9 @@
 # Pytest Quick Reference
 
-## Everyday Commands
-
-- Fast suite (skip slow/integration): `make test`
-- Full suite: `make test-all`
-- Coverage in terminal: `make test-cov`
-- Coverage HTML report: `make cov-html`
-
 ## Common Pytest Flags
 
 - `-q` quiet mode (less output noise)
+- `-ra` extra end-of-run summary for all outcomes except passes
 - `-m "<expr>"` run tests matching marker expression
 - `-k "<expr>"` run tests by name substring/expression
 - `-x` stop at first failure
@@ -17,6 +11,23 @@
 - `--lf` run only last failed tests
 - `--ff` run failed tests first
 - `--maxfail=<n>` stop after `n` failures
+
+## `-r` / `-ra` quick reference
+
+- `-r <chars>` controls what appears in the short test summary at the end.
+- `-ra` is shorthand for "all except passes" (helpful default signal without lots of noise).
+- Common letters:
+  - `f` failed
+  - `E` error
+  - `s` skipped
+  - `x` xfailed
+  - `X` xpassed
+  - `p` passed
+  - `P` passed with output
+- Useful combos:
+  - `-ra` broad summary without pass spam
+  - `-rfE` only failures + errors
+  - `-rA` everything (including passes)
 
 ## Marker Examples
 
@@ -59,7 +70,22 @@ Useful overrides:
 - Disable fail-under temporarily: `--cov-fail-under=0`
 - Skip HTML report for speed: `--cov-report=term-missing`
 
-## Config Location
+## `pytest-cov` quick hits
+
+- `pytest-cov` is a separate plugin package; `pytest` does not include `--cov` flags by default.
+- If `--cov` is "unrecognized arguments", the plugin is missing from the environment.
+- Use terminal coverage (`term`/`term-missing`) for fast local feedback.
+- Use HTML coverage when you want to inspect missed lines interactively.
+- In CI, prefer machine-readable reports (commonly XML) plus a concise terminal summary.
+- Keep one source of truth for thresholds (`--cov-fail-under`) so local and CI expectations stay aligned.
+
+## Quick gotchas
+
+- Marker expressions need quotes in most shells.
+- `-k` matches test names, class names, and file substrings; it is broader than many people expect.
+- `--lf` can show "no tests ran" if no prior failures were recorded in cache.
+- `-x` and `--maxfail=1` are effectively equivalent in most workflows.
+
+## Config locations
 
 - Pytest config: `pytest.ini`
-- Make shortcuts: `Makefile`

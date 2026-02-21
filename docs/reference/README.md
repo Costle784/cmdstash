@@ -4,8 +4,11 @@ This folder is the project's "memory stash": short, practical notes for things t
 
 Use these docs for:
 - command flags and quick reminders
-- workflow snippets
+- gotchas and mental models
 - small decision records for implementation details
+
+Do not use these docs as the canonical source for repo workflow commands.
+Keep canonical runnable commands in `README.md` and `AGENTS.md`.
 
 Current references:
 - `pytest.md`
@@ -16,5 +19,5 @@ Current references:
 
 Guidelines:
 - Keep entries brief and task-focused.
-- Prefer concrete commands over long prose.
+- Prefer "why/when/gotcha" reminders over command catalogs.
 - Update these notes as implementation decisions become real.

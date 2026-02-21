@@ -14,13 +14,8 @@
   Declares targets that are commands, not files.  
   Why use it: if a file named `test` exists, `make test` still runs the test command.
 
-## Useful commands in this repo
+## Quick gotchas
 
-- `make help` - list available targets
-- `make test` - fast local tests (skips slow/integration)
-- `make test-all` - run full test suite
-- `make test-cov` - run tests with coverage summary
-- `make cov-html` - generate HTML coverage report
-- `make lint` - run Ruff checks
-- `make format` - run Ruff formatter
-- `make check` - format + lint + full tests
+- A leading tab is required for recipe lines in Makefiles.
+- Use `:=` for immediate assignment and `=` for deferred expansion.
+- Prefer `$(VAR)` over `$VAR` inside Makefiles for consistency and clarity.

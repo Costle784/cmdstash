@@ -133,12 +133,12 @@ For each step/PR-sized change, include:
 If you introduce a new pattern (e.g., FTS search, schema migrations, config dirs),
 add a brief explanation in docs (or in-code docstrings/comments) describing it.
 
-### 3) No code changes without a clear plan
-Before implementing a chunk of work, write (or update) `docs/plan.md`:
-- list the next small step
-- define acceptance criteria for that step
+### 3) Keep planning docs current
+Before implementing a chunk of work:
+- update `docs/plans.md` with the relevant step status/scope
+- update `docs/spec.md` if behavior or requirements change
 
-Then implement **only that step**.
+Then implement only the scoped step.
 
 ### 4) Always keep the repo runnable
 After each step, ensure:
@@ -157,7 +157,7 @@ After each step, ensure:
 
 - `README.md` is user-facing quickstart.
 - `docs/spec.md` is the source-of-truth product spec.
-- `docs/plan.md` is the incremental implementation plan (checked off as steps complete).
+- `docs/plans.md` is the incremental implementation plan and step tracker.
 - `docs/reference/` is the "memory stash" for practical reference notes:
   - command flags you forget
   - workflow recipes
