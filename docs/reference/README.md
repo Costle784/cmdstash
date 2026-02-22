@@ -17,6 +17,7 @@ Current references:
 - `ai-integration.md`
 - `sqlite.md`
 - `python-imports.md`
+- `platformdirs.md`
 
 Guidelines:
 - Keep entries brief and task-focused.

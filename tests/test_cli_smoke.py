@@ -1,6 +1,7 @@
 import runpy
 import subprocess
 import sys
+from pathlib import Path
 
 from cmdstash import cli
 
@@ -64,6 +65,17 @@ def test_tags_command_placeholder_output() -> None:
     assert "not wired yet" in result.stdout
 
 
+def test_doctor_command_output() -> None:
+    result = _run_cmdstash("doctor")
+
+    assert result.returncode == 0
+    assert "cmdstash doctor" in result.stdout
+    assert "Version" in result.stdout
+    assert "Supported Python" in result.stdout
+    assert "Database path" in result.stdout
+    assert "cmdstash.db" in result.stdout
+
+
 def test_add_requires_command_argument() -> None:
     result = _run_cmdstash("add")
 
@@ -117,3 +129,33 @@ def test_tags_uses_consistent_stub_renderer(monkeypatch) -> None:
     assert captured["title"] == "cmdstash tags (stub)"
     assert "not wired yet" in captured["body"]
     assert captured["border_style"] == "magenta"
+
+
+def test_print_stub_uses_console_print(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    def fake_print(renderable: object) -> None:
+        captured["renderable"] = renderable
+
+    monkeypatch.setattr(cli.console, "print", fake_print)
+    cli._print_stub("Title", "Body")
+
+    assert "renderable" in captured
+
+
+def test_doctor_prints_table(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    monkeypatch.setattr(cli, "get_default_db_path", lambda: Path("/tmp/cmdstash-data/cmdstash.db"))
+    monkeypatch.setattr(cli, "get_supported_python_specifier", lambda: ">=3.14,<3.15")
+    monkeypatch.setattr(cli.platform, "python_version", lambda: "3.14.0-test")
+    monkeypatch.setattr(cli.platform, "platform", lambda: "TestOS-1.0")
+
+    def fake_print(renderable: object) -> None:
+        captured["renderable"] = renderable
+
+    monkeypatch.setattr(cli.console, "print", fake_print)
+    cli.doctor()
+
+    table = captured["renderable"]
+    assert getattr(table, "title") == "cmdstash doctor"

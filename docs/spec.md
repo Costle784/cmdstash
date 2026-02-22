@@ -118,6 +118,20 @@ Note: `find` does **not** execute commands. It only returns stored metadata.
 
 ---
 
+### 4) `cmdstash doctor`
+Prints diagnostic information about the local `cmdstash` runtime/configuration.
+
+Initial output includes:
+- app version
+- supported Python range
+- runtime Python/platform (debug context)
+- resolved database path
+
+This command should act as the primary place to expose additional user-relevant
+config details over time (for example, model/provider selection and override sources).
+
+---
+
 ## LLM integration (MVP)
 
 ### LLM contract
@@ -152,8 +166,10 @@ Tests should be able to run without making real LLM calls (mockable client).
 ### Storage
 Use a local SQLite database.
 
-- The database should live in a sensible per-user config/data directory by default
-  (platform-appropriate; exact choice can be decided during implementation).
+- Default location uses `platformdirs.user_data_path("cmdstash", ensure_exists=True)`.
+- The default database file is `cmdstash.db` inside that directory.
+- This keeps storage platform-appropriate (`~/Library/Application Support` on macOS,
+  `AppData` on Windows, XDG data dir on Linux) without manual path handling.
 - Provide an override flag later if needed (e.g., `--db path`) — optional for MVP.
 
 ### Data model (initial proposal)
@@ -234,7 +250,6 @@ Potential commands:
 ---
 
 # Open questions (to resolve during planning)
-- Where should the SQLite DB live by default (OS-specific path)?
 - What is the initial tag taxonomy (the actual list of tags)?
 - Do we adopt FTS5 in MVP or in a follow-up step?
 - Should `find` include relevance ranking beyond “contains match” (FTS ranking)?

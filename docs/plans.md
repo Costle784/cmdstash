@@ -67,13 +67,14 @@ For each step below:
 
 ## Step 3 — Configuration and default storage location
 
-**Status:** Not started (awaiting explicit user go-ahead)
+**Status:** Completed
 
 **Goal:** Decide and implement default DB file path using `platformdirs`.
 
 **Scope:**
 - Add a small config module that resolves app data directory and DB path.
 - Ensure directories are created safely when needed.
+- Expose resolved path information through a diagnostics command (`cmdstash doctor`).
 - Document the chosen path behavior in `README.md` or `docs/spec.md`.
 
 **Acceptance criteria:**

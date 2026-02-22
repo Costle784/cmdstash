@@ -1,3 +1,8 @@
+---
+description: 
+alwaysApply: true
+---
+
 # AGENTS.md — cmdstash
 
 This repository is a **learning project**. Optimize for **clarity, small steps, and explanation** over speed.
@@ -158,6 +163,8 @@ After each step, ensure:
 - Maintain a balanced test mix across unit, integration, e2e, and smoke over time.
 - Use appropriate pytest markers where they improve test selection and clarity.
 
+### 5) Consult appropriate docs
+- When writing Python code/tests/config consult @Docs pytest, @Docs ruff, @Docs rich, @Docs cyclopts, @Docs platformdirs and follow them.
 ---
 
 ## Documentation expectations
