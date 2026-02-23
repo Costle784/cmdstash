@@ -19,7 +19,7 @@
 ---
 
 ## Terminology
-- **Entry**: a stored command plus metadata (tags, description, examples, timestamps).
+- **Command record**: a stored command plus metadata (tags, description, examples, timestamps).
 - **Tag taxonomy**: the predefined set of tags the LLM can choose from.
 - **Facets**: tag counts aggregated across a search result set (shown as `tag (count)`).
 
@@ -175,18 +175,27 @@ Use a local SQLite database.
 ### Data model (initial proposal)
 A minimal model that supports search + metadata:
 
-**entries**
+**commands**
 - `id` (integer primary key)
 - `command` (text, required)
 - `description` (text, required)
-- `examples_json` (text, required; JSON array)
 - `created_at` (datetime, required)
 - `updated_at` (datetime, required)
 
-**entry_tags** (normalized tags)
-- `entry_id` (fk)
-- `tag` (text)
-- index on `tag`
+**tags**
+- `id` (integer primary key)
+- `name` (text, unique)
+
+**command_tags** (normalized tags)
+- `command_id` (fk)
+- `tag_id` (fk)
+- unique pair on (`command_id`, `tag_id`)
+
+**command_examples**
+- `id` (integer primary key)
+- `command_id` (fk)
+- `example` (text)
+- `position` (integer, 0-based order)
 
 Alternate approach (allowed if it simplifies MVP):
 - Store tags as JSON or a single text column, but ensure search and facet counting remain fast.

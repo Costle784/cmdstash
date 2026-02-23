@@ -89,17 +89,23 @@ For each step below:
 
 ## Step 4 — SQLite schema and initialization
 
+**Status:** Completed
+
 **Goal:** Introduce durable storage with a minimal, testable schema.
 
 **Scope:**
 - Add storage layer module(s) isolated from CLI wiring.
-- Create schema for entries and tags (or chosen equivalent) with indexes.
+- Create initial schema for commands, tags, command-tag links, and examples with indexes.
 - Add DB initialization/bootstrap path on first use.
+- Add a minimal migration runner with SQL files/steps tracked in a dedicated
+  `schema_migrations` table (Alembic-style version tracking).
+- Keep migrations forward-only and additive where practical.
 
 **Acceptance criteria:**
 - Schema creates successfully on empty DB.
 - Re-running initialization is safe (idempotent).
-- Unit tests cover schema initialization behavior.
+- Unit tests cover schema initialization behavior, migration tracking, and
+  upgrading an older schema state.
 
 **Verify:**
 - `uv run pytest -q`
@@ -274,6 +280,34 @@ For each step below:
 **Verify:**
 - Follow README from scratch on a clean environment.
 - `uv run ruff format . && uv run ruff check . && uv run pytest -q`
+
+---
+
+## Step 13 — Composition root for dependency wiring (post-MVP)
+
+**Goal:** Centralize runtime wiring at the CLI entrypoint using explicit, manual DI.
+
+**When to do this:**
+- At least two of these are true:
+  - Command handlers repeatedly duplicate setup/wiring code.
+  - Three or more runtime services must be composed (for example: storage, enrichment provider, clock, config).
+  - Tests need broad monkeypatching across modules to replace globals.
+  - Multiple runtime wiring profiles are needed (for example: local/dev/test).
+
+**Scope:**
+- Add a small composition root (`build_services()` or similar) near the app entrypoint.
+- Construct concrete dependencies in one place and pass them explicitly to command flows.
+- Keep wiring framework-free (no DI container/service locator).
+- Keep interfaces and call paths straightforward and test-friendly.
+
+**Acceptance criteria:**
+- CLI command flows no longer construct core services ad hoc in multiple locations.
+- Command logic receives dependencies explicitly (direct args or one small services object).
+- Tests can swap key dependencies with fakes without broad monkeypatching.
+
+**Verify:**
+- `uv run pytest -q`
+- `uv run ruff format . && uv run ruff check .`
 
 ---
 
