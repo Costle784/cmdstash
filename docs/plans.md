@@ -284,3 +284,10 @@ For each step below:
 - Whether to add `cmdstash show <id>` in MVP or defer.
 - Real LLM provider choice and configuration contract.
 
+---
+
+## Learning Notes
+
+- Lightweight DI can be introduced incrementally by adding optional keyword-only parameters for external dependencies (for example, path resolvers or metadata readers).
+- In tests, prefer passing small fake functions directly into those parameters before reaching for monkeypatching.
+

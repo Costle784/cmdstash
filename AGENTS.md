@@ -123,6 +123,8 @@ CLI output should be polished and colorful with Rich.
 5. **Prefer simple, testable design**
    - Separate business logic from CLI wiring.
    - Avoid hidden side effects; prefer explicit inputs.
+   - Prefer lightweight dependency injection (function args or constructor args) over monkeypatching when practical.
+   - Keep DI simple and explicit; avoid introducing heavyweight patterns unless the complexity clearly pays for itself.
    - Add minimal tests early; expand in small increments.
    - Avoid over-abstraction.
 
